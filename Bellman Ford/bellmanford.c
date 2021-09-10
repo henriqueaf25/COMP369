@@ -182,6 +182,10 @@ int main(int argc, char *argv[])
           arqOutput = i + 1;
           valid = true;
         }
+        if(i == argc - 1 && source == -1){
+          printf("Insert source vertex with -i to proceed\n");
+          return 0;
+        }
       }
       i = 0;
       FILE *file = fopen(argv[arqInput], "r");
