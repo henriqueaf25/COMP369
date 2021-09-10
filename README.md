@@ -1,1 +1,1 @@
-# COMP369
+# Graph Theory Algorithms Performance
