@@ -134,7 +134,7 @@ int main(int argc, char *argv[])
   {
     if (argc == 2 && strcmp(argv[1], "-h") == 0)
     {
-      printf("----------Bellman Ford's Algorithm----------\n");
+      printf("---------- Bellman-Ford Algorithm ----------\n");
       printf("Commands:\n");
       printf("-o <file> : write the output in a file named <file>\n");
       printf("-f <file> : indicates the input <file>\n");
