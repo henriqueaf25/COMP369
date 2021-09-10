@@ -1,1 +1,5 @@
-# Graph Theory Algorithms Performance
+# Graph Theory Algorithms :
+## Bellman-Ford Algorithm
+## Prim Algorithm
+## Dijkstra Algorithm
+## Kruskal Algorithm
