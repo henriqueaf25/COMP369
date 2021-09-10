@@ -40,7 +40,7 @@ void bellmanFord(struct G *graph, int initialVertex, char valid[], bool sort)
       }
     }
   }
-
+//with this loop, we check if there is any cycle with a negative weight
   for (i = 0; i < numEdges; ++i)
   {
     v = graph->edge[i].v;
@@ -52,6 +52,7 @@ void bellmanFord(struct G *graph, int initialVertex, char valid[], bool sort)
       return;
     }
   }
+  //if -s parameter was passed then we'll sort dist array and store vertex in index
   if (sort)
   {
     int index[numVertices], valueStore;
@@ -74,6 +75,7 @@ void bellmanFord(struct G *graph, int initialVertex, char valid[], bool sort)
         }
       }
     }
+    //If -o parameters was passed, create a file named as *valid then write output in it
     if (strcmp(valid, "none") != 0)
     {
       FILE *file = fopen(valid, "w");
@@ -193,11 +195,13 @@ int main(int argc, char *argv[])
           ++aux;
         }
         fclose(file);
+        //creating a graph
         struct G *graph = (struct G *)malloc(sizeof(struct G));
         graph->V = arr[0];
         graph->E = arr[1];
         graph->edge = (struct Edge *)malloc(graph->E * sizeof(struct Edge));
         aux = 0;
+        //filling graph
         for (i = 0; i < graph->E; ++i)
         {
           graph->edge[i].v = arr[aux + 2];
@@ -205,6 +209,7 @@ int main(int argc, char *argv[])
           graph->edge[i].d = arr[aux + 4];
           aux += 3;
         }
+        //output file cannot has the same name of input file
         if (valid && strcmp(argv[arqInput], argv[arqOutput]) != 0)
           bellmanFord(graph, source, argv[arqOutput], sort);
         else if (valid && strcmp(argv[arqInput], argv[arqOutput]) == 0)
