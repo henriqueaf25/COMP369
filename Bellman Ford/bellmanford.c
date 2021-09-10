@@ -161,7 +161,7 @@ int main(int argc, char *argv[])
         }
         else if (strcmp(argv[i], "-l") == 0)
         {
-          printf("Bellman Ford's algorithm only accepts initial vertices\n");
+          printf("Bellman-Ford algorithm only accepts initial vertices\n");
           return 0;
         }
         else if (strcmp(argv[i], "-f") == 0 && i + 1 < argc)
