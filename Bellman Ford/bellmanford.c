@@ -229,7 +229,7 @@ int main(int argc, char *argv[])
       }
       else
       {
-        printf("File doesn't exists or cannot be opened. Please try a valid file name\n");
+        printf("Input file doesn't exists or cannot be opened. Please try a valid file name\n");
       }
     }
   }
