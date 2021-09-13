@@ -2,7 +2,7 @@
 ### Every single program has a "./namesourcefile -h" command that shows a guide to execute
 ## Bellman-Ford Algorithm
 The Bellman–Ford algorithm is an algorithm that computes shortest paths from a single source vertex to all of the other vertices in a weighted digraph even with a negative weight.
-### Input file used as example: [graph.txt](https://github.com/henriqueaf25/Teoria_dos_Grafos-COMP369/blob/master/Bellman%20Ford/graph.txt);
+### Inputs used as example:
  ```
 5 10
 0 1 6
@@ -18,7 +18,7 @@ The Bellman–Ford algorithm is an algorithm that computes shortest paths from a
   ```
 ## Prim's Algorithm
 Prim's algorithm is a greedy algorithm that finds a minimum spanning tree for a weighted undirected graph.
-### Input file used as example: [graph.txt](https://github.com/henriqueaf25/Teoria_dos_Grafos-COMP369/blob/master/Prim/graph.txt)
+### Inputs used as example: 
  ```
 6 8
 0 1 5
@@ -32,7 +32,7 @@ Prim's algorithm is a greedy algorithm that finds a minimum spanning tree for a 
   ```
 ## Dijkstra's Algorithm
 Dijkstra's algorithm is an algorithm for finding the shortest paths between nodes in a graph. Differente from Bellman-Ford algorithm, Dijkstra's don't accept negative weighted edges but in the other hand it's more efficient. 
-### Input file used as example: [graph.txt](https://github.com/henriqueaf25/Teoria_dos_Grafos-COMP369/blob/master/Dijkstra/graph.txt)
+### Inputs used as example: 
  ```
 4 6
 0 1 4
