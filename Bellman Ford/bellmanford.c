@@ -17,7 +17,7 @@ struct G
   struct Edge *edge; //E of G
 };
 
-void bellmanFord(struct G *graph, int initialVertex, char valid[], bool sort)
+void bellmanFord(struct G *graph, int initialVertex, char valid[], bool sort, int final)
 {
   int i, j, numVertices = graph->V, numEdges = graph->E, inf = 100000, u, v, d;
   int dist[numVertices];
@@ -40,7 +40,7 @@ void bellmanFord(struct G *graph, int initialVertex, char valid[], bool sort)
       }
     }
   }
-//with this loop, we check if there is any cycle with a negative weight
+
   for (i = 0; i < numEdges; ++i)
   {
     v = graph->edge[i].v;
@@ -52,7 +52,6 @@ void bellmanFord(struct G *graph, int initialVertex, char valid[], bool sort)
       return;
     }
   }
-  //if -s parameter was passed then we'll sort dist array and store vertex in index
   if (sort)
   {
     int index[numVertices], valueStore;
@@ -75,7 +74,6 @@ void bellmanFord(struct G *graph, int initialVertex, char valid[], bool sort)
         }
       }
     }
-    //If -o parameters was passed, create a file named as *valid then write output in it
     if (strcmp(valid, "none") != 0)
     {
       FILE *file = fopen(valid, "w");
@@ -86,17 +84,37 @@ void bellmanFord(struct G *graph, int initialVertex, char valid[], bool sort)
       }
       else
       {
-        for (i = 0; i < numVertices; ++i)
+        if (final != 0)
         {
-          fprintf(file, "The distance of the source vertex %d to vertex %d is %d\n", initialVertex, index[i], (-1) * dist[i]);
+          for (i = initialVertex; i <= final; ++i)
+          {
+            fprintf(file, "The distance of the source vertex %d to vertex %d is %d\n", initialVertex, index[i], (-1) * dist[i]);
+          }
+        }
+        else
+        {
+          for (i = 0; i < numVertices; ++i)
+          {
+            fprintf(file, "The distance of the source vertex %d to vertex %d is %d\n", initialVertex, index[i], (-1) * dist[i]);
+          }
         }
       }
     }
     else
     {
-      for (i = 0; i < numVertices; ++i)
+      if (final != 0)
       {
-        printf("The distance of the source vertex %d to vertex %d is %d\n", initialVertex, index[i], (-1) * dist[i]);
+        for (i = initialVertex; i <= final; ++i)
+        {
+          printf("The distance of the source vertex %d to vertex %d is %d\n", initialVertex, index[i], (-1) * dist[i]);
+        }
+      }
+      else
+      {
+        for (i = 0; i < numVertices; ++i)
+        {
+          printf("The distance of the source vertex %d to vertex %d is %d\n", initialVertex, index[i], (-1) * dist[i]);
+        }
       }
     }
   }
@@ -112,17 +130,37 @@ void bellmanFord(struct G *graph, int initialVertex, char valid[], bool sort)
       }
       else
       {
-        for (i = 0; i < numVertices; ++i)
+        if (final != 0)
         {
-          fprintf(file, "The distance of the source vertex %d to vertex %d is %d\n", initialVertex, i, (-1) * dist[i]);
+          for (i = initialVertex; i < final; ++i)
+          {
+            fprintf(file, "The distance of the source vertex %d to vertex %d is %d\n", initialVertex, i, (-1) * dist[i]);
+          }
+        }
+        else
+        {
+          for (i = 0; i < numVertices; ++i)
+          {
+            fprintf(file, "The distance of the source vertex %d to vertex %d is %d\n", initialVertex, i, (-1) * dist[i]);
+          }
         }
       }
     }
     else
     {
-      for (i = 0; i < numVertices; ++i)
+      if (final != 0)
       {
-        printf("The distance of the source vertex %d to vertex %d is %d\n", initialVertex, i, (-1) * dist[i]);
+        for (i = initialVertex; i <= final; ++i)
+        {
+          printf("The distance of the source vertex %d to vertex %d is %d\n", initialVertex, i, (-1) * dist[i]);
+        }
+      }
+      else
+      {
+        for (i = 0; i < numVertices; ++i)
+        {
+          printf("The distance of the source vertex %d to vertex %d is %d\n", initialVertex, i, (-1) * dist[i]);
+        }
       }
     }
   }
@@ -136,20 +174,23 @@ int main(int argc, char *argv[])
   {
     if (argc == 2 && strcmp(argv[1], "-h") == 0)
     {
-      printf("---------- Bellman-Ford Algorithm ----------\n");
+      printf("----------Bellman Ford's Algorithm----------\n");
       printf("Commands:\n");
       printf("-o <file> : write the output in a file named <file>\n");
       printf("-f <file> : indicates the input <file>\n");
       printf("-s : shows output in ascending order\n");
       printf("-i : indicates source vertex\n");
+      printf("-l : indicates final vertex\n");
       printf("Every graph must have a 0 vertex and for all v in V, v belongs to [0, |V| - 1]\n");
       printf("e.g a graph with 5 vertices then V = {0,1,2,3,4}\n");
-      printf("When -f is called, the next acceptable input is <file> or -s\n");
+      printf("When -f is passed, the next acceptable input is <file> or -s\n");
       printf("If -s is the argument after -f, then <file> has to be next\n");
+      printf("When -o is passed, the next input has to be the output file name\n");
+      printf("Both -i and -l when called expects the next input as a vertex\n");
     }
     else
     {
-      int arqInput, source, arqOutput;
+      int arqInput, source, arqOutput, final = 0;
       bool sort = false, valid = false;
       int i, aux = 0, arr[MAX];
       for (i = 1; i < argc; ++i)
@@ -161,8 +202,7 @@ int main(int argc, char *argv[])
         }
         else if (strcmp(argv[i], "-l") == 0)
         {
-          printf("Bellman-Ford algorithm only accepts initial vertices\n");
-          return 0;
+          final = atoi(argv[i + 1]);
         }
         else if (strcmp(argv[i], "-f") == 0 && i + 1 < argc)
         {
@@ -182,10 +222,11 @@ int main(int argc, char *argv[])
           arqOutput = i + 1;
           valid = true;
         }
-        if(i == argc - 1 && source == -1){
-          printf("Insert source vertex with -i to proceed\n");
-          return 0;
-        }
+      }
+      if (source > final && final != 0)
+      {
+        printf("Source vertex cannot be larger than final vertex\n");
+        return 0;
       }
       i = 0;
       FILE *file = fopen(argv[arqInput], "r");
@@ -199,13 +240,11 @@ int main(int argc, char *argv[])
           ++aux;
         }
         fclose(file);
-        //creating a graph
         struct G *graph = (struct G *)malloc(sizeof(struct G));
         graph->V = arr[0];
         graph->E = arr[1];
         graph->edge = (struct Edge *)malloc(graph->E * sizeof(struct Edge));
         aux = 0;
-        //filling graph
         for (i = 0; i < graph->E; ++i)
         {
           graph->edge[i].v = arr[aux + 2];
@@ -213,9 +252,8 @@ int main(int argc, char *argv[])
           graph->edge[i].d = arr[aux + 4];
           aux += 3;
         }
-        //output file cannot has the same name of input file
         if (valid && strcmp(argv[arqInput], argv[arqOutput]) != 0)
-          bellmanFord(graph, source, argv[arqOutput], sort);
+          bellmanFord(graph, source, argv[arqOutput], sort, final);
         else if (valid && strcmp(argv[arqInput], argv[arqOutput]) == 0)
         {
           printf("The output and input file must have a different name\n");
@@ -224,16 +262,16 @@ int main(int argc, char *argv[])
         else if (valid)
         {
           if (strcmp(argv[arqOutput], "none") == 0)
-            bellmanFord(graph, source, "None", sort);
+            bellmanFord(graph, source, "None", sort, final);
         }
         else
         {
-          bellmanFord(graph, source, "none", sort);
+          bellmanFord(graph, source, "none", sort, final);
         }
       }
       else
       {
-        printf("Input file doesn't exists or cannot be opened. Please try a valid file name\n");
+        printf("File doesn't exists or cannot be opened. Please try a valid file name\n");
       }
     }
   }
