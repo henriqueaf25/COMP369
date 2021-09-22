@@ -44,3 +44,15 @@ Dijkstra's algorithm is an algorithm for finding the shortest paths between node
   ```
 ## Kruskal's Algorithm
 Kruskal's algorithm finds a minimum spanning forest of an undirected edge-weighted graph. If the graph is connected, it finds a minimum spanning tree.
+### Inputs used as example:
+```
+6 8
+0 1 5
+0 2 4
+1 3 6
+1 4 1
+1 5 7
+2 3 2
+2 4 6
+3 5 1
+```
